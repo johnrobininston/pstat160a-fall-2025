@@ -158,7 +158,7 @@ $$
 p_{X_{2}|X_{1}+X_{2}=7}(x)  & =\frac{\mathbb{P}(X_{1}=8-x)\mathbb{P}(X_{2}=x)}{\mathbb{P}(X_{1}+X_{2}=8)}   \\
  & = \begin{cases}
  \frac{{\frac{1}{6}\cdot \frac{1}{6}}}{\frac{5}{36}}=\frac{1}{5} & \text{if } x \in \{ 2, \dots, 6 \}, \\
-    & \text{otherwise}.
+    0 & \text{otherwise}.
 \end{cases}
 \end{aligned}
 $$
