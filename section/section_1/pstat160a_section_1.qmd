@@ -1,0 +1,70 @@
+---
+mainfont: Libertinus Serif
+headingfont: Libertinus Serif
+format:
+  pdf:
+    geometry: margin=1in
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 1}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{John Inston, Denisse Alejandra Escobar Parra} \newline
+\textbf{Date:} \textit{September 30, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow Q1.1 
+
+For the following scenarios identify a stochastic process $\{ X_{t} \}_{t \in I}$ describing: (i) $X_{t}$ in context, (ii) state space, and (iii) index set.  State whether the state space and index set are discrete or continuous.
+
+1. From day to day the weather in International Falls, Minnesota is either rain, clear or snow.
+
+2. At the end of each year, a 4-year college student either advances in grade, repeats their grade, or drops out.
+
+3. Seismologists record daily earthquake magnitudes in Chile.  The largest recorded earthquake in history was the Valdivia, Chile earthquake on May 22nd 1960, which had a magnitude of 9.5 on the Richter scale.
+
+4. Data is kept on the circumferences of trees in an arboretum. The arboretum covers a two square-mile area.  *Assume that the data is for a single time point.* 
+
+5. Starting Monday morning at 9 a.m., as students arrive to class, the teacher records student arrival times. The class has 30 students and lasts for 60 minutes.
+
+6. A card player shuffles a standard deck of cards by the following method: the top card of the deck is placed somewhere in the deck at random. The player does this 100 times to mix up the deck.
+
+## Problem 2 - Dobrow Q1.2
+
+A regional insurance company insures homeowners against flood damage.  Half of their policyholders are in Florida, 30% in Louisiana, and 20% in Texas.  Company actuaries give the estimates in @tbl-tab1 for the probability that a policyholder will file a claim for flood damage over the next year.
+
+1. Find the probability that a random policyholder will file a claim for flood damage next year.
+
+2. A claim was filed.  Find the probability that the policyholder is from Texas.
+
+: Probability of Claim for Flood Damage {#tbl-tab1}
+
+| State                | Florida | Louisiana | Texas |
+|:---------------------|:-------:|:---------:|:-----:|
+| Probability of Claim | 0.03    | 0.015     | 0.02  |
+
+## Problem 3 - Dobrow Q1.3
+
+Let $B_{1}, \dots, B_{k}$ be a partition of the sample space.  For events $A$ and $C$, prove the law of total probability for conditional probability
+$$
+\mathbb{P}(A|C)=\sum_{i=1}^{k}\mathbb{P}(A|B_{i}\cap C)\mathbb{P}(B_{i}|C).
+$$
+
+## Problem 4 - Dobrow Q1.4
+
+(See Problem 2) Among all policyholders who live within five miles of the Atlantic Ocean, 75% live in Florida, 20% live in Louisiana, and 5% live in Texas.  For those who live close to the ocean the probabilities of filing a claim increase, as given in Table 2.
+
+: Table: Probability of claim for those within five miles of Atlantic Coast.
+
+| State                | Florida | Louisiana | Texas |
+| -------------------- | ------- | --------- | ----- |
+| Probability of Claim | 0.10    | 0.06      | 0.06  |
+
+Assume that a policyholder lives within five miles of the Atlantic coast. Use the law of total probability for conditional probability in Exercise 1.3 to find the chance they will file a claim for flood damage next year.
+
+## Problem 5 - Dobrow Q1.5
+
+Two fair six-sided dice are rolled.  Let $X_{1}, X_{2}$ be the outcomes of the first and second die, respectively.  
+
+1. Find the conditional distribution of $X_{2}$ given that $X_{1}+X_{2}=7$.
+2. Find the conditional distribution of $X_{2}$ given that $X_{1}+X_{2}=8$.
+
