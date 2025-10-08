@@ -1,0 +1,150 @@
+---
+title: ""
+author: ""
+format:
+  pdf:
+    pdf-engine: xelatex   # or lualatex
+    geometry: margin=1in
+header-includes:
+  - \usepackage{amsmath,amssymb,amsfonts}
+  - \usepackage{enumitem}
+  - \setlist[enumerate,1]{label=(\alph*)}
+  - \usepackage{libertinus}    % text/math font family
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 2}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{Denisse Alejandra Escobar Parra, John Inston} \newline
+\textbf{Date:} \textit{October 7, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow Q1.9 
+
+Assume that $X$ is uniformly distributed on $\{1,2,3,4\}$. If $X = x$, then $Y$ is uniformly distributed on $\{1, \ldots, x\}$. Find
+
+\begin{enumerate}
+    \item $\mathbb{P}(Y = 2 \mid X = 2)$
+    \item $\mathbb{P}(Y = 2)$
+    \item $\mathbb{P}(X = 2 \mid Y = 2)$
+    \item $\mathbb{P}(X = 2)$
+    \item $\mathbb{P}(X = 2, Y = 2)$
+\end{enumerate}
+
+### Solution
+
+\begin{enumerate}
+
+\item Since $Y \mid X=2 \sim Unif(1,2),$ then $\mathbb{P}(Y = 2 \mid X = 2)= \dfrac{1}{2}$
+\item The marginal probability mass function of $Y$ can be computed as follows
+$$\mathbb{P}(Y=2) = \displaystyle\sum_{x=1}^4 \mathbb{P}(Y=2, X=x) = \displaystyle\sum_{x=1}^4  \mathbb{P}(Y=2 \mid X=x)\mathbb{P}(X=x)$$
+However, notice that $\mathbb{P}(Y=2 \mid X=1)=0$ and that $\mathbb{P}(X=x)=\dfrac{1}{4}$ for all $x \in \{1,2,3,4\}$. Thus,
+
+\begin{align*} 
+\mathbb{P}(Y=2) &= \mathbb{P}(Y=2 \mid X=2)\mathbb{P}(X=2) + \mathbb{P}(Y=2 \mid X=3)\mathbb{P}(X=3)  + \mathbb{P}(Y=2 \mid X=4)\mathbb{P}(X=4) \\
+&= \dfrac{1}{4} \Big(  \mathbb{P}(Y=2 \mid X=2) + \mathbb{P}(Y=2 \mid X=3) + \mathbb{P}(Y=2 \mid X=4)  \Big) \\
+&= \dfrac{1}{4} \Big(  \dfrac{1}{2} + \dfrac{1}{3} + \dfrac{1}{4}  \Big) = \dfrac{13}{48}
+\end{align*} 
+
+\item By Bayes Theorem, $\mathbb{P}(X = 2 \mid Y = 2) = \dfrac{\mathbb{P}(Y = 2 \mid X = 2) \mathbb{P}(X = 2)}{\mathbb{P}(Y = 2)} = \dfrac{\frac{1}{2} \cdot \frac{1}{4}}{\frac{13}{48}} = \dfrac{6}{13} $
+
+\item $X$ is uniformly distributed on $\{1,2,3,4\}$. Hence, $\mathbb{P}(X = 2)= \dfrac{1}{4}$  
+
+\item $\mathbb{P}(X = 2, Y = 2) = \mathbb{P}(Y = 2 \mid X = 2)  \mathbb{P}(X = 2) =  \dfrac{1}{2} \cdot \dfrac{1}{4} = \dfrac{1}{8} $ 
+
+
+\end{enumerate}
+
+
+## Problem 2 — Dobrow Q1.14
+
+Random variables $X$ and $Y$ have joint density function
+
+$$ f(x,y) = 4 e^{-2x}, \quad \text{for } 0 < y < x < \infty.$$
+
+
+\begin{enumerate}
+    \item Find the conditional density of $X$ given $Y = y$.
+    \item Find the conditional density of $Y$ given $X = x$. Describe the conditional distribution.
+\end{enumerate}
+
+### Solution
+
+\begin{enumerate}
+\item To find the conditional density of $X$ given $Y=y$, we use $f_{X\mid Y}(x\mid y) = \dfrac{f(x,y)}{f_Y(y)}$ 
+where $f_Y(y)$ is the marginal density function of $Y$. \\
+The marginal density $Y$ is 
+
+$$f_Y(y)= \int_y^{\infty} 4e^{-2x} dx = 2e^{-2y}, \quad y>0$$
+Thus, 
+
+$$ f_{X\mid Y}(x\mid y) = \dfrac{f(x,y)}{f_Y(y)} = \dfrac{4 e^{-2x}}{2e^{-2y}}= 2e^{-2(x-y)}, \quad x>y>0$$ 
+\item To find the conditional density of $Y$ given $X=x$, we use $f_{Y\mid X}(y\mid x) = \dfrac{f(x,y)}{f_X(x)}$ 
+where $f_X(x)$ is the marginal density function of $X$. \\
+The marginal density of $X$ is 
+$$f_X(x)=\int_{0}^{x}4e^{-2x}\,dy=4x\,e^{-2x},\quad x>0. $$ 
+Therefore,
+
+$$ f_{Y\mid X}(y\mid x) = \dfrac{f(x,y)}{f_X(x)} = \dfrac{4 e^{-2x}}{4xe^{-2x}}= \dfrac{1}{x}, \quad x>0$$
+which is the uniform distribution on $(0,x)$. 
+\end{enumerate}
+
+## Problem 3 - Dobrow Q1.18
+From the definition of conditional expectation given an event, show that
+
+   $$ \mathbb{E}(I_B \mid A) = \mathbb{P}(B \mid A)$$
+   
+
+### Solution
+
+By definition (page 22 of the book), we have 
+
+$$ \mathbb{E}(I_B \mid A) = \dfrac{\mathbb{E}(I_BI_A)}{\mathbb{P}(A)} = \dfrac{\mathbb{E}(I_{A\cap B})}{\mathbb{P}(A)} = \dfrac{\mathbb{E}(I_{A\cap B})}{\mathbb{P}(A)}$$
+Notice that $$\mathbb{E}(I_{A \cap B})= 1 \cdot \mathbb{P}(A \cap B) + 0 \cdot  \mathbb{P}((A \cap B)^c) = \mathbb{P}(A\cap B).$$ Hence,
+
+
+$$ \mathbb{E}(I_B \mid A) = \dfrac{\mathbb{P}(A\cap B)}{\mathbb{P}(A)} = \mathbb{P}(B \mid  A) \quad \Box$$
+
+## Problem 4 - Dobrow Q1.33
+
+\textbf{R:} Cards are drawn from a standard deck, with replacement, until an ace appears. 
+Simulate the mean and variance of the number of cards required.
+
+### Solution
+We will proceed with the structure given by the book:
+
+```{r}
+set.seed(2) #Reproducibility
+trials<-10000
+simlist<-numeric(trials)
+#Create the deck of cards
+cards <-paste0(
+    rep(c("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"), each = 4),
+    rep(c("♠", "♥", "♦", "♣"), times = 13)
+  )
+# function to check if card is an ace
+is_ace <- function(x) {
+  x %in% c("A♠", "A♥", "A♦", "A♣")
+  }
+
+# repeat simulation
+for (i in 1:trials) {
+  ace <- 0
+  count <- 0 #Counts cards until an ace appears
+  while (ace == 0) {
+    pick <- sample(cards, 1, replace=TRUE) #We are drawing with replacement
+    count <- count + 1
+    if (is_ace(pick)==TRUE){
+      ace <- 1 #Breaks the while 
+    } 
+  }
+  simlist[i] <- count 
+}
+
+cat(sprintf("Estimated mean: %.4f \n", mean(simlist)))
+cat(sprintf("Estimated variance: %.4f \n", var(simlist)))
+
+
+```
+
+
+
