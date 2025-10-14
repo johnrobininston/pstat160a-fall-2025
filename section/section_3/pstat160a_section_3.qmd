@@ -1,0 +1,406 @@
+---
+mainfont: Libertinus Serif
+headingfont: Libertinus Serif
+execute: 
+  echo: false
+  eval: false
+format:
+  pdf:
+    geometry: margin=1in
+    mainfont: Libertinus Serif
+    sansfont: Libertinus Serif
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 3}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{John Inston, Denisse Alejandra Escobar Parra} \newline
+\textbf{Date:} \textit{October 14, 2025}\newline
+\hrule
+
+## Probability Distributions in R
+
+R provides a unified system for working with probability distributions.  Each distribution (Normal, Binomial, Poisson, etc.) has a *root name*, and four associated commands obtained by adding one of the prefixes `d`, `p`, `q`, or `r`.
+
+Table: Table of prefixes with descriptions.
+
+| Prefix | Meaning                | Description                                  |
+|:------:|:-----------------------|:---------------------------------------------|
+| `d`    | Density / Mass         | Gives $f(x)$ or $P(X=x)$.                    |
+| `p`    | Cumulative probability | Computes $P(X \leq q)$.                      | 
+| `q`    | Quantile (inverse CDF) | Finds $q$ such that $P(X \le q)=p$.          | 
+| `r`    | Random generation      | Simulates $n$ samples from the distribution. |
+
+Table: Common probability distributions in `R` and their root names.
+
+| Distribution   | Root     | Distribution      | Root       |
+| :------------- | :------- | :---------------- | :--------- |
+| Beta           | `beta`   | Log-normal        | `lnorm`    |
+| Binomial       | `binom`  | Multinomial       | `multinom` |
+| Cauchy         | `cauchy` | Negative Binomial | `nbinom`   |
+| Chi-squared    | `chisq`  | Normal            | `norm`     |
+| Exponential    | `exp`    | Poisson           | `pois`     |
+| F              | `f`      | Student’s *t*     | `t`        |
+| Gamma          | `gamma`  | Uniform           | `unif`     |
+| Geometric      | `geom`   | Weibull           | `weibull`  |
+| Hypergeometric | `hyper`  | —                 | —          |
+
+
+**Example 1.** Generate 5 random numbers distributed as Poisson with $\lambda =3$.
+```{r}
+#| echo: true
+#| eval: true
+rpois(5,3)
+```
+
+**Example 2.**  Compute $\mathbb{P}(X \leq 2)$ with $X\sim Bin(10, 0.3)$.
+
+```{r}
+#| echo: true
+#| eval: true
+pbinom(2,10,0.3)
+```
+
+**Example 3.**  Find the 90th percentile of a $Gamma(2,1)$ distribution.
+```{r}
+#| echo: true
+#| eval: true
+qgamma(0.9, 2, 1)
+```
+
+**Example 4.** Find $f_X(2.5)$ where $X\sim exp(1)$.
+```{r}
+#| echo: true
+#| eval: true
+dexp(2.5,1)
+```
+
+#### Exercises
+
+1. Use `rbinom(10, size = 10, prob = 0.5)` to generate random values. Change the probability parameter to 0.2 and 0.8. What do you notice about the results?
+        
+```{r}
+rbinom(10, size = 10, prob = 0.5)
+rbinom(10, size = 10, prob = 0.2)
+rbinom(10, size = 10, prob = 0.8)
+```
+
+2. Simulate \texttt{x <- rnorm(1000, 0, 1)}.  Plot a histogram of \texttt{x} and overlay the theoretical density using:
+
+```{r}
+#| echo: true
+#| eval: false
+hist(x, freq = FALSE)
+curve(dnorm(x, 0, 1), add = TRUE, col = "blue")
+```
+
+```{r}
+set.seed(10)
+x <- rnorm(1000, 0, 1)
+hist(x, freq = FALSE, col="pink")
+curve(dnorm(x, 0, 1), add = TRUE, col = "darkgreen")
+```
+
+3. Compute the proportion of simulated values falling between $-1$ and $1$, and compare to \texttt{pnorm(1) - pnorm(-1)}.
+        
+```{r}
+mean(abs(x) <= 1)
+pnorm(1) - pnorm(-1)
+```
+
+\newpage
+
+## Plots and grahs
+
+### Plots and Graphs in R
+
+A central part of data analysis is \emph{visualizing} numerical results. In R, the command \texttt{plot()} is extremely versatile: it can display functions, data points, time series, or relationships between variables.  
+
+Other common plotting functions include `curve()` for smooth functions and `hist()` for histograms.
+
+#### Basic usage of `plot()`
+
+The general form is:
+
+```{r}
+#| eval: false
+#| echo: true
+plot(x, y, type = "p", main = "Title", xlab = "X-axis", ylab = "Y-axis")
+```
+
+Some common values for the argument \texttt{type} are:
+
+- `p`: points (the default)
+- `l`: lines
+- `b`: both points and lines
+
+You can also customize colors, labels, or add reference lines with \texttt{col}, \texttt{xlab}, \texttt{ylab}, and \texttt{abline()}.
+
+#### Example 1. Plotting a quadratic function
+
+Use `curve()` to graph $f(x) = x^2 - 4x + 3$ for $x \in [0, 5]$:
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+curve(x^2 - 4*x + 3, from = 0, to = 5,
+      main = "Quadratic Function",
+      xlab = "x", ylab = "f(x)", col = "lightblue", lwd = 2)
+abline(h = 0, col = "gray")
+```
+
+This produces a smooth curve of the function and adds a horizontal line at $y=0$.
+
+#### Example 2. Histogram and density curve
+
+The command `hist()` displays the distribution of simulated or observed data. To overlay a continuous density curve, set `freq = FALSE` so that the histogram represents relative frequencies.
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+
+z <- rexp(1000, rate = 1)   # Exponential(1) samples
+hist(z, freq = FALSE, main = "Histogram of Exponential(1) Samples",
+     xlab = "z", col = "lightblue", border = "white")
+curve(dexp(x, 1), from = 0, to = 6, add = TRUE, col = "darkblue", lwd = 2)
+```
+
+#### Example 3. Multiple lines in the same plot
+
+Use `lines()` to add more series to an existing plot.  Below we compare $\sin(x)$ and $\cos(x)$ on the same axes.
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+x <- seq(0, 2*pi, length.out = 200)
+plot(x, sin(x), type = "l", col = "blue", lwd = 2,
+     main = "Sine and Cosine Functions", ylab = "Value", xlab = "x")
+lines(x, cos(x), col = "orange", lwd = 2)
+legend("topright", legend = c("sin(x)", "cos(x)"),
+       col = c("blue", "orange"), lwd = 2, bty = "n")
+```
+
+### Exercises
+
+1. Plot the cubic function $f(x) = x^3 - 3x$ for $x \in [-3, 3]$. Add horizontal and vertical reference lines at $0$ using \texttt{abline()}.
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+curve(x^3 - 3*x, from = -3, to = 3,
+      main = "Cubic: f(x) = x^3 - 3x",
+      xlab = "x", ylab = "f(x)", lwd = 2)
+abline(h = 0, v = 0, lty = 2)
+```
+
+2. Simulate 1,000 values from a $\text{Normal}(5, 2^2)$ distribution. Create a histogram with density scaling (`freq = FALSE`) and overlay the theoretical normal density using `curve()`.
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+set.seed(160)
+z <- rnorm(1000, mean = 5, sd = 2)
+hist(z, freq = FALSE, col = "orchid", border = "white",
+     main = "Normal(5, 2^2): Histogram with Density",
+     xlab = "z")
+curve(dnorm(x, mean = 5, sd = 2), add = TRUE, lwd = 2)
+```
+
+3. Plot the functions $\sin(x)$, $\cos(x)$, and $\sin(x) + \cos(x)$  on the same graph with different colors and a legend.
+```{r}
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+x <- seq(0, 2*pi, length.out = 400)
+
+plot(x, sin(x), type = "l", lwd = 2,
+     main = "Trigonometric Functions",
+     xlab = "x", ylab = "value", ylim=c(-2,2), col="orange")
+lines(x, cos(x), lwd = 2, col="palegreen")
+lines(x, sin(x) + cos(x), lwd = 2, col="darkturquoise")
+legend("topright",
+       legend = c("sin(x)", "cos(x)", "sin(x)+cos(x)"),  col = c( "orange","palegreen", "darkturquoise"),
+       lwd = 2, bty = "n")
+abline(h=0,col="grey")
+```
+
+\newpage
+
+## Script Files in R
+
+When working with many R commands, it is convenient to save them in a *script file*. A script is simply a plain text file (usually with extension `.R`) that stores R code.   This allows you to edit, organize, and re-run code easily, without typing each command into the console every time.
+
+### Creating and running a script in RStudio
+
+1. Go to **File** $\rightarrow$ **New File** $\rightarrow$ **R Script**.
+2. Type your commands in the editor pane.
+3. Highlight the lines you want to execute, and press `Cmd + Enter` (Mac) or `Ctrl + Enter` (Windows).
+4. Save the file with a meaningful name, such as `my\_script.R`.
+
+Alternatively, once a script is saved, you can execute the entire file directly from the console:
+
+```{r}
+#| eval: false
+#| echo: true
+source("my_script.R")
+```
+
+Using scripts helps to keep your workflow organized, reproducible, and easier to share.
+
+#### Example 1. Simple sequence operations
+
+Create a new file named \texttt{sequences.R} and write the following commands:
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+x <- 1:10
+y <- x^2
+plot(x, y, type = "b", col = "purple",
+     main = "Squares of the First 10 Integers",
+     xlab = "x", ylab = "x^2")
+```
+
+Save the file and run it using `source("sequences.R")`. The resulting plot should appear in your RStudio plotting window.
+
+#### Example 2. Simulating and plotting coin flips
+
+Consider 500 independent coin flips, with 1 representing heads and 0 tails.  
+We can compute and plot the running proportion of heads.
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+n <- 500
+flips <- sample(0:1, n, replace = TRUE)
+prop <- cumsum(flips) / (1:n)
+
+plot(1:n, prop, type = "l", col = "blue",
+     xlab = "Number of flips",
+     ylab = "Proportion of heads",
+     main = "Running Proportion of Heads")
+abline(h = 0.5, col = "red", lwd = 2, lty = 2)
+```
+
+This visualizes the **Law of Large Numbers**: as $n$ increases, the proportion of heads tends to $0.5$.
+
+#### Example 3. Writing a short script that computes summary statistics
+
+Save the following script as `summaries.R`:
+
+```{r}
+#| echo: true
+#| eval: false
+x <- rnorm(1000, mean = 10, sd = 2)
+mean_x <- mean(x)
+sd_x <- sd(x)
+
+cat("Sample mean:", mean_x, "\n")
+cat("Sample standard deviation:", sd_x, "\n")
+```
+
+When you run `source("summaries.R")`, R prints the computed sample mean and standard deviation in the console.
+
+### Exercises
+
+1. Modify the coin flip simulation so that the coin is *biased*, with probability of heads $p = 0.6$. Plot the running proportion of heads and compare it to the unbiased case.
+        
+```{r}
+n <- 500
+flips <- sample(0:1, n, replace = TRUE)
+prop <- cumsum(flips) / (1:n)
+
+plot(1:n, prop, type = "l", col = "blue",
+     xlab = "Number of flips",
+     ylab = "Proportion of heads",
+     main = "Running Proportion of Heads")
+abline(h = 0.5, col = "red", lwd = 2, lty = 2)
+```
+
+\newpage
+
+## Random Walks
+
+A *random walk* is a mathematical model that describes a path consisting of a sequence of random steps.  Specifically, a random walk is a sequence of random variables $\left\{X_t\right\}_{t\in\mathbb{N}}$ which are defined recursively by
+$$
+X_{t} = X_{t-1} + \xi_t,
+$${#eq-random-walk}
+
+where $\{\xi_t\}_{t\in\mathbb{N}}$ is the sequence of independent and identically distributed random variables representing the random steps.
+
+```{r}
+#| eval: true
+#| echo: false
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+x <- 0
+for(t in 2:100){
+  x[t] <- x[t-1] + rnorm(1,0,1) 
+}
+plot(1:100,x,type="l",xlab="t", ylab="X[t]", main="Simple random walk.")
+```
+
+Random walks can also be represented as a cumulative sum, for example from @eq-random-walk we can compute
+
+$$
+\begin{aligned}
+X_{t} & = X_{t-1} + \xi_{t} \\
+& = (X_{t-1} + \xi_{t-1}) + \xi_{t} \\
+& \quad\quad \vdots \\
+& = X_0 + \xi_{1} + \xi_2 + ... + \xi_t \\
+& = X_0 + \sum_{i=1}^t \xi_i.
+\end{aligned}
+$${#eq-random-walk-2}
+
+A *realization* of a random walk is a single selection from the set of possible paths.  To generate a realization of a random walk we simulate the random variables used to construct the process.
+
+#### Example 1. Realizations of a random walk
+
+We define a random walk using @eq-random-walk-2 where we specify $\xi_t\sim\mathcal{N}(\mu=1, \sigma^2=1)$.  We can first write a function `gaussian_random_walk`  generating a single realization of the process of length `T=100` with starting position `x0=0`:
+
+```{r}
+#| eval: true
+#| echo: true
+gaussian_random_walk <- function(mu=0,sigma=1,T=100,x0=0){
+  xi <- rnorm(T-1,mu,sigma)
+  x <- x0
+  for(t in 2:T){
+    x[t] = x[t-1] + xi[t]
+  }
+  return(x)
+}
+```
+
+We can use this function to produce a 10 realizations of the process which we plot using `lines()`:
+```{r}
+#| eval: true
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4
+#| fig-align: center
+set.seed(321)
+x <- gaussian_random_walk()
+plot(1:100,x,type = "l", xlab="t", ylab="X[t]", ylim=c(-17,20))
+for(i in 2:10){
+  lines(1:100,gaussian_random_walk(),col=i)
+}
+```
+
+### Exercises
+
+1. Adjust the code above to change the step random variables to following independent and identically distribution Bernoulli random variables with $p=0.5$. 
