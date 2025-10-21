@@ -1,0 +1,84 @@
+---
+title: ""
+author: ""
+format:
+  pdf:
+    pdf-engine: xelatex   # or lualatex
+    geometry: margin=1in
+header-includes:
+  - \usepackage{amsmath,amssymb,amsfonts}
+  - \usepackage{enumitem}
+  - \setlist[enumerate,1]{label=(\alph*)}
+  - \usepackage{libertinus}    % text/math font family
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 4}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{Denisse Alejandra Escobar Parra, John Inston} \newline
+\textbf{Date:} \textit{October 21, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow Q2.1
+
+A Markov chain has transition matrix
+$$
+P:=\begin{bmatrix}
+0.1 & 0.3 & 0.6 \\
+0 & 0.4 & 0.6 \\
+0.3 & 0.2 & 0.5
+\end{bmatrix},
+$$
+
+with initial distribution $\alpha=\begin{bmatrix}0.2 & 0.3 & 0.5\end{bmatrix}$.  Find the following:
+
+1. $\mathbb{P}(X_{7}=3|X_{6}=2)$,
+2. $\mathbb{P}(X_{9}=2|X_{1}=2,X_{5}=1, X_{7}=3)$,
+3. $\mathbb{P}(X_{0}|X_{1}=1)$,
+4. $\mathbb{E}[X_{2}]$.
+
+
+## Problem 2 - Dobrow Q2.2
+
+Let $X_{0}, X_{1}, \dots$ be a Markov chain with transition matrix
+$$
+P=\begin{bmatrix}
+0 & \frac{1}{2} & \frac{1}{2} \\
+1 & 0 & 0  \\
+\frac{1}{3} & \frac{1}{3} & \frac{1}{3}
+\end{bmatrix},
+$$
+
+and initial distribution $\alpha=\begin{bmatrix} \frac{1}{2} & 0 & \frac{1}{2}\end{bmatrix}$.  Find the following:
+
+1. $\mathbb{P}(X_{2}=1|X_{1}=3)$,
+2. $\mathbb{P}(X_{1}=3,X_{2}=1)$,
+3. $\mathbb{P}(X_{1}=3|X_{2}=1)$,
+4. $\mathbb{P}(X_{9}=1|X_{1}=3, X_{4}=1, X_{7}=2)$.
+
+## Problem 3 - Dobrow Q2.4
+
+For the general two-state chain with transition matrix
+$$
+P=\begin{bmatrix}
+1-p & p \\
+q & 1-q
+\end{bmatrix},
+$$
+
+and initial distribution $\alpha=\begin{bmatrix}\alpha_{1} & \alpha_{2}\end{bmatrix}$ find the following:
+
+1. the two-step transition matrix
+2. the distribution $X_{1}$.
+
+## Problem 4 - Dobrow Q2.6
+
+A tetrahedron die has four faces labelled 1, 2, 3 and 4.  In repeated independent rolls of the die $R_{0}, R_{1}, \dots$, let $X_{n}=\max(R_{0}, \dots, R_{n})$ be the maximum value after $n+1$ rolls, for $n \geq 0$:
+
+1. Give an intuitive argument for why $X_{0}, X_{1}, \dots$ is a Markov chain, and exhibit the transition matrix.
+2. Find $\mathbb{P}(X_{3}\geq 3)$.
+
+## Problem 5 - Dobrow Q2.7 
+
+Let $X_{0}, X_{1}, \dots$ be a Markov chain with transition matrix $P$.  Let $Y_{n}=X_{3n}$, for $n=0,1,2,\dots$.  Show that $Y_{0}, Y_{1}, \dots$ is a Markov chain and exhibit its transition matrix.
+
+
