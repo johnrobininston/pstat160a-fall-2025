@@ -1,0 +1,68 @@
+---
+mainfont: Libertinus Serif
+headingfont: Libertinus Serif
+execute: 
+  echo: true
+  eval: true
+format:
+  pdf:
+    geometry: margin=1in
+    mainfont: Libertinus Serif
+    sansfont: Libertinus Serif
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 5}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{Denisse Alejandra Escobar Parra, John Inston} \newline
+\textbf{Date:} \textit{November 4, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow 3.29
+
+Consider the Markov Chain (MC) with transition probability matrix
+$$
+P=\begin{bmatrix}
+0.6 & 0.2 & 0 & 0 & 0.2 & 0 & 0  \\
+0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 \\
+0 & 0 & 0.3 & 0.7 & 0 & 0 & 0 \\
+0 & 0.3 & 0.4 & 0.3 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0  \\
+0 & 0.1 & 0 & 0 & 0 & 0 & 0.9  \\
+0 & 0.2 & 0 & 0 & 0 & 0.8 & 0
+\end{bmatrix}.
+$$
+Identify the communication classes.  Classify the states as recurrent or transient, and determine the period of each state.
+
+## Problem 2 - Dobrow 3.46
+
+Given a MC with transition matrix $P$ and stationary distribution $\pi$, the time reversal is a Markov chain with transition matrix $\tilde{P}$ defined by
+$$
+\tilde{P_{i,j}}=\frac{{\pi_{j}P_{j,i}}}{\pi_{i}},
+$$
+for all $i,j\in \mathcal{S}$.
+
+1. Show that a Markov chain with transition matrix $P$ is reversible if and only if $P=\tilde{P}$.
+2. Show that the time reversal Markov chain has the same stationary distribution as the original one.
+
+## Problem 3 - Dobrow 3.52
+
+The board for a modified Snakes and Ladder game is shown in Figure 1 below. The game is played with a tetrahedron (4-sided) die.
+
+1. Find the expected length of the game.
+2. Assume that the player is on square 6.  Find the probability that they will find themselves at square 3 before finishing the game.
+
+![Modified snakes and ladders.](assets/img/snakes-ladders.png){width=400}
+
+## Problem 4 - Dobrow 3.57
+
+In repeated coin flips consider the set of all 3-element patterns
+$$
+\{ HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}.
+$$
+
+Which patterns take the longest time, on average, to appear in repeated sampling? Which take the shortest?
+
+## Problem 5 - Dobrow 3.64
+
+The evolution of forest ecosystems in the United States and Canada is studied in Strigul et al. (2012) using Markov chains.  Five-year changes in the state of the forest soil are modeled with a 12-state Markov chain.  The transition matrix can be found in the `R`-script file `forest.R`.  About how many years does it take for the ecosystem to move from state 1 to state 12?
+
