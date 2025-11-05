@@ -1,0 +1,358 @@
+---
+mainfont: Libertinus Serif
+headingfont: Libertinus Serif
+execute: 
+  echo: true
+  eval: true
+format:
+  pdf:
+    geometry: margin=1in
+    mainfont: Libertinus Serif
+    sansfont: Libertinus Serif
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 5}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{Denisse Alejandra Escobar Parra, John Inston} \newline
+\textbf{Date:} \textit{November 4, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow 3.29
+
+Consider the Markov Chain (MC) with transition probability matrix
+$$
+P=\begin{bmatrix}
+0.6 & 0.2 & 0 & 0 & 0.2 & 0 & 0  \\
+0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 \\
+0 & 0 & 0.3 & 0.7 & 0 & 0 & 0 \\
+0 & 0.3 & 0.4 & 0.3 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0  \\
+0 & 0.1 & 0 & 0 & 0 & 0 & 0.9  \\
+0 & 0.2 & 0 & 0 & 0 & 0.8 & 0
+\end{bmatrix}.
+$$
+Identify the communication classes.  Classify the states as recurrent or transient, and determine the period of each state.
+
+### Solution
+
+Recall that states $i, j$ communicate with one another if $i\leftrightarrow j$, that is there is a non-zero probability of moving from $i$ to $j$ and from $j$ to $i$.  States that communicate with one another form communication classes.  To identify the communication classes we can produce the Markov chain state diagram
+
+![State Diagram](assets/img/state-diagram.png){width=400}
+
+We have the following 4 communication classes:
+1. $\{ 2,6,7 \}$
+2. $\{ 3,4 \}$
+3. $\{ 1 \}$
+4. $\{ 5 \}$
+
+State 5 is absorbing and is therefore recurrent.  State 1, 3 and 4 are transient as eventually the process will leave them and never return.  The states 2, 6 and 7 are recurrent.
+
+The states are all aperiodic (i.e. have period 1).
+
+## Problem 2 - Dobrow 3.46
+
+Given a MC with transition matrix $P$ and stationary distribution $\pi$, the time reversal is a Markov chain with transition matrix $\tilde{P}$ defined by
+$$
+\tilde{P_{i,j}}=\frac{{\pi_{j}P_{j,i}}}{\pi_{i}},
+$$
+for all $i,j\in \mathcal{S}$.
+
+1. Show that a Markov chain with transition matrix $P$ is reversible if and only if $P=\tilde{P}$.
+2. Show that the time reversal Markov chain has the same stationary distribution as the original one.
+
+### Solution
+
+**(1)** *Proof:* The result follows almost immediately. 
+$(\implies)$ Assuming reversibility we have that
+$$
+P_{i,j}=\frac{\pi_jP_{j,i}}{\pi_{i}}=\tilde{P}_{i,j}.
+$$
+
+$(\impliedby)$ Assuming that $P=\tilde{P}$ we have that
+$$
+\begin{aligned}
+\pi_{i}P_{i,j}
+\end{aligned}=\pi_{i}\tilde{P}_{i,j}=\pi_{i} \frac{\pi_{j}P_{j,i}}{\pi_{i}}=\pi_{j}P_{j,i}.
+$$
+$\square$
+
+**(2)** *Proof:* 
+Since $\pi$ is a stationary distribution we have that
+$$
+\pi=\pi P\implies \pi_{j}=\sum_{i \in \mathcal{S}}^{}\pi_{i}P_{i,j}.
+$$
+We can therefore compute
+$$
+\begin{aligned}
+(\pi  \tilde{P})_{j} & = \sum_{i\in \mathcal{S}}^{}\pi_{i}\tilde{P}_{i,j} \\
+& = \sum_{i \in \mathcal{ S}}^{} \frac{\pi_{i}\cdot\pi_{j}P_{j,i}}{\pi_{i}} \\
+& = \pi_{j}\sum_{i \in \mathcal{S}}^{}P_{j,i} \\
+& = \pi_{j}.
+\end{aligned}
+$$
+$\square$ 
+
+## Problem 3 - Dobrow 3.52
+
+The board for a modified Snakes and Ladder game is shown in Figure 1 below. The game is played with a tetrahedron (4-sided) die.
+
+1. Find the expected length of the game.
+2. Assume that the player is on square 6.  Find the probability that they will find themselves at square 3 before finishing the game.
+
+![Modified snakes and ladders.](assets/img/snakes-ladders.png){width=400}
+
+### Solution 
+
+We label the squares of the board as $0,1,2,\dots,9$, where $0$ represents the starting position before the first move, and $9$ is the terminal (absorbing) state. The game is played using a fair tetrahedral die, so the moves $+1,+2,+3,+4$ each occur with probability $1/4$. After moving, we apply the ladder or snake shown in the figure. 
+
+The ladder/snake transitions are:
+$$
+2 \to 7,\qquad 5 \to 3,\qquad \& \qquad 8 \to 4.
+$$
+
+Notice that for the game to end, a player needs to land exactly on $9$. The player who accomplishes this first, wins.  The transition matrix is 
+$$
+P =
+\begin{pmatrix}
+0 & \tfrac14 & 0 & \tfrac14 & \tfrac14 & 0 & 0 & \tfrac14 & 0 & 0 \\
+0 & 0 & 0 & \tfrac12 & \tfrac14 & 0 & 0 & \tfrac14 & 0 & 0 \\
+0 & 0 & 0 & \tfrac12 & \tfrac14 & 0 & \tfrac14 & 0 & 0 & 0 \\
+0 & 0 & 0 & \tfrac14 & \tfrac14 & 0 & \tfrac14 & \tfrac14 & 0 & 0 \\
+0 & 0 & 0 & \tfrac14 & \tfrac14 & 0 & \tfrac14 & \tfrac14 & 0 & 0 \\
+0 & 0 & 0 & 0 & \tfrac14 & 0 & \tfrac14 & \tfrac14 & 0 & \tfrac14 \\
+0 & 0 & 0 & 0 & \tfrac14 & 0 & \tfrac14 & \tfrac14 & 0 & \tfrac14 \\
+0 & 0 & 0 & 0 & \tfrac14 & 0 & 0 & \tfrac12 & 0 & \tfrac14 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0& \tfrac34  & \tfrac14 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{pmatrix}.
+$$
+
+**(1)** The only absorbing state is $9$, thus, the transient states are:
+$$
+\mathcal{T} = \{0,1,2,3,4,5,6,7,8\}.
+$$
+
+We write the transition matrix $P$ in canonical absorbing form:
+$$
+P =
+\begin{pmatrix}
+Q & R \\
+0 & I
+\end{pmatrix},
+$$
+
+where $Q$ is the submatrix of transitions among transient states.  The fundamental matrix is:
+$$
+F = (I - Q)^{-1}.
+$$
+
+Entry $F_{ij}$ gives the expected number of visits to state $j$ starting from state $i$ before absorption.  Therefore, the expected length of the game starting from state $0$ is:
+$$
+\mathbb{E}_0[T] = \sum_{j \in \mathcal{T}} F_{0j}.
+$$
+
+Computing $F$, we get that
+```{r}
+P <- matrix(c(
+  0,   1/4, 0,   1/4, 1/4, 0,   0,   1/4, 0,   0,
+  0,   0,   0,   1/2, 1/4, 0,   0,   1/4, 0,   0,
+  0,   0,   0,   1/2, 1/4, 0,   1/4, 0,   0,   0,
+  0,   0,   0,   1/4, 1/4, 0,   1/4, 1/4, 0,   0,
+  0,   0,   0,   1/4, 1/4, 0,   1/4, 1/4, 0,   0,
+  0,   0,   0,   0,   1/4, 0,   1/4, 1/4, 0,   1/4,
+  0,   0,   0,   0,   1/4, 0,   1/4, 1/4, 0,   1/4,
+  0,   0,   0,   0,   1/4, 0,   0,   1/2, 0,   1/4,
+  0,   0,   0,   0,   0,   0,   0,   3/4, 0,   1/4,
+  0,   0,   0,   0,   0,   0,   0,   0,   0,   1
+), nrow = 10, byrow = TRUE)
+dimnames(P) <- list(from = 0:9, to = 0:9)
+Q<-P[1:9,1:9]
+F<-solve(diag(9)-Q)
+a<-F%*%rep(1,9)
+a[1,1]
+```
+
+Hence, 
+$$
+\boxed{\mathbb{E}_0[T] = 8.625.}
+$$
+
+**(2)** Now we make both $3$ and $9$ absorbing states giving the new set of transient states:
+$$
+\mathcal{T}' = \{0,1,2,4,5,6,7,8\}.
+$$
+
+Again, we write the transition matrix in absorbing form and compute:
+$$
+F = (I - Q)^{-1}, \qquad B = F R,
+$$
+
+where $B$ is the absorption probability matrix. Row $i$ of $B$ gives the probabilities of being eventually absorbed in each absorbing state when starting from $i$.
+```{r}
+Qb<-Q[-4,-4]
+Fb<-solve(diag(8)-Qb)
+Fb%*%P[-c(4,10),c(4,10)]
+```
+
+Extracting the row corresponding to state $6$, we obtain:
+$$
+\boxed{\mathbb{P}_6(\text{hit 3 before 9}) = \tfrac{1}{4}.}
+$$
+
+## Problem 4 - Dobrow 3.57
+
+In repeated coin flips consider the set of all 3-element patterns
+$$
+\{ HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}.
+$$
+
+Which patterns take the longest time, on average, to appear in repeated sampling? Which take the shortest?
+
+### Solution 
+
+
+For a given pattern $A = a_1 a_2 a_3$, define states by the longest suffix of the past that
+matches a prefix of $A$:
+
+$$
+S_0 = \varnothing,\quad S_1 = a_1,\quad S_2 = a_1a_2,\quad S_3 = a_1a_2a_3.
+$$
+
+State $S_3$ is absorbing. Ordering the states $(S_0,S_1,S_2,S_3)$, let $Q$ be the
+$3\times 3$ transient block of the transition matrix. The fundamental matrix is
+
+$$
+F = (I - Q)^{-1} = I + Q + Q^2 + Q^3 + \cdots,
+$$
+
+and the expected number of flips to first see $A$ (starting in $S_0$) is
+
+$$
+\mathbb{E}[T_A] = \sum_{j=0}^2 F_{0j}.
+$$
+
+There are only three types of length-3 patterns, determined by whether they
+overlap with themselves:
+
+1.  $HHH, TTT$
+2.  $HTH, THT$
+3.  $HHT, HTT, THH, TTH$
+
+By symmetry $H \leftrightarrow T$, each pair in a class has the same expected time. We compute one representative per class.
+
+**Class I: Full overlap (we'll do the calculation with $HHH$)**
+
+$$
+Q = \begin{pmatrix}
+\frac12 & \frac12 & 0\\[2pt]
+\frac12 & 0      & \frac12\\[2pt]
+\frac12 & 0      & 0
+\end{pmatrix},\quad
+I-Q = \begin{pmatrix}
+\frac12 & -\frac12 & 0\\
+-\frac12 & 1 & -\frac12\\
+-\frac12 & 0 & 1
+\end{pmatrix}.
+$$
+
+$$
+F = (I - Q)^{-1} =
+\begin{pmatrix}
+8 & 4 & 2\\
+6 & 4 & 2\\
+4 & 2 & 2
+\end{pmatrix}.
+$$
+
+Therefore,
+
+$$
+\mathbb{E}[T_{\text{HHH}}] = 8 + 4 + 2 = 14.
+$$
+
+By symmetry, $\boxed{\mathbb{E}[T_{\text{TTT}}] = 14}$.
+
+
+**Class II: One-symbol overlap (we'll do the calculation with $HTH$)**
+
+$$
+Q = \begin{pmatrix}
+\frac12 & \frac12 & 0\\
+0 & \frac12 & \frac12\\
+\frac12 & 0 & 0
+\end{pmatrix},\quad
+I-Q = \begin{pmatrix}
+\frac12 & -\frac12 & 0\\
+0 & \frac12 & -\frac12\\
+-\frac12 & 0 & 1
+\end{pmatrix}.
+$$
+
+$$
+N = \begin{pmatrix}
+4 & 4 & 2\\
+2 & 4 & 2\\
+2 & 2 & 2
+\end{pmatrix}.
+$$
+
+So,
+
+$$
+\mathbb{E}[T_{\text{HTH}}] = 4 + 4 + 2 = 10.
+$$
+
+By symmetry, $\mathbb{E}[T_{\text{THT}}] = 10$.
+
+**Class III: No self-overlap (we'll do the calculation with $HTT$)**
+
+$$
+Q = \begin{pmatrix}
+\frac12 & \frac12 & 0\\
+0 & \frac12 & \frac12\\
+0 & \frac12 & 0
+\end{pmatrix},\quad
+I-Q = \begin{pmatrix}
+\frac12 & -\frac12 & 0\\
+0 & \frac12 & -\frac12\\
+0 & -\frac12 & 1
+\end{pmatrix}.
+$$
+
+$$
+N = \begin{pmatrix}
+2 & 4 & 2\\
+0 & 4 & 2\\
+0 & 2 & 2
+\end{pmatrix}.
+$$
+
+Thus,
+
+$$
+\mathbb{E}[T_{\text{HTT}}] = 2 + 4 + 2 = 8.
+$$
+
+By symmetry,
+
+$$
+\mathbb{E}[T_{\text{HHT}}] = \mathbb{E}[T_{\text{THH}}] = \mathbb{E}[T_{\text{TTH}}] = 8.
+$$
+
+## Problem 5 - Dobrow 3.64
+
+The evolution of forest ecosystems in the United States and Canada is studied in Strigul et al. (2012) using Markov chains.  Five-year changes in the state of the forest soil are modeled with a 12-state Markov chain.  The transition matrix can be found in the `R`-script file `forest.R`.  About how many years does it take for the ecosystem to move from state 1 to state 12?
+
+### Solution
+
+```{r}
+source("forest.R")  
+
+P <- mat
+Q<-P[1:11,1:11]
+F<-solve(diag(11)-Q)
+a<-F%*%rep(1,11)
+5*round(a[1,],2)
+```
+
+
