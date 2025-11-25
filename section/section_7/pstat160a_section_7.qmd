@@ -1,0 +1,65 @@
+---
+mainfont: Libertinus Serif
+headingfont: Libertinus Serif
+execute: 
+  echo: true
+  eval: true
+format:
+  pdf:
+    geometry: margin=1in
+    mainfont: Libertinus Serif
+    sansfont: Libertinus Serif
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 7}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{Denisse Alejandra Escobar Parra, John Inston} \newline
+\textbf{Date:} \textit{November 25, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow 5.3
+
+Commuters in an urban center either drive by car, take the bus, or bike to work. Based on recent changes to local transportation systems, urban planners predict yearly behavior changes of commuters based on a Markov model $(X_n)_{n\geq1}$ with transition matrix
+$$
+P =
+\begin{pmatrix}
+0.7 & 0.2 & 0.1 \\
+0.1 & 0.8 & 0.1 \\
+0.05 & 0.15 & 0.8
+\end{pmatrix}.
+$$
+
+1. In a city of 10,000 commuters, 6,000 currently drive cars, 3,000 take the bus, and 1,000 bike to work. Two years after transportation changes are made, how many commuters will use each type of transportation? Over the long term, how many commuters will use each type of transportation?
+
+2. The European Cyclists Federation reports the following levels of CO$_2$ emissions (in grams) per passenger per kilometer traveled:  
+
+   - Car: 271  
+   - Bus: 101  
+   - Bike: 21  
+   
+    What is the current average amount of CO$_2$ emissions per kilometer traveled? How does the average change over the long term?
+
+## Problem 2 - Dobrow 5.5
+
+Exhibit a Metropolis–Hastings algorithm to sample from the distribution:
+
+| Value | 1 | 2 | 3 | 4 | 5 | 6 |
+|------|---|---|---|---|---|---|
+| Probability | 0.01 | 0.39 | 0.11 | 0.18 | 0.26 | 0.05 |
+
+Use a proposal distribution based on one fair die roll.
+
+## Problem 3 - Dobrow 5.7
+
+Exhibit a Metropolis–Hastings algorithm to sample from a binomial distribution with parameters $n$ and $p$
+Use a proposal distribution that is uniform on $\{0,1,\dots,n\}$.
+
+## Problem 4 - Dobrow 5.9
+
+Show how to use the Metropolis–Hastings algorithm to simulate from the double exponential distribution, with density  
+$$
+f(x) = \frac{\lambda}{2} e^{-\lambda |x|}, \qquad -\infty < x < \infty .
+$$
+
+Use the normal distribution as a proposal distribution.
+

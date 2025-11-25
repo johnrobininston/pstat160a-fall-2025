@@ -1,0 +1,334 @@
+---
+mainfont: Libertinus Serif
+headingfont: Libertinus Serif
+execute: 
+  echo: true
+  eval: true
+format:
+  pdf:
+    geometry: margin=1in
+    mainfont: Libertinus Serif
+    sansfont: Libertinus Serif
+---
+
+\LARGE\textbf{PSTAT160A Stochastic Processes}\vspace{5pt}\newline
+\Large\textbf{Section 6 - Solutions}\vspace{5pt} \newline
+\normalsize\textbf{Authors:} \textit{Denisse Alejandra Escobar Parra, John Inston} \newline
+\textbf{Date:} \textit{November 18, 2025}\newline
+\hrule
+
+## Problem 1 - Dobrow 4.3
+
+Let $X \sim \text{Poisson}(\lambda)$ and $Y \sim\text{Poisson}(\mu)$.  Assume that $X$ and $Y$ are independent.  Use PGFs to find the distribution of $X+Y$.
+
+### Solution
+
+The PGF of a random variable following a _Poisson Distribution_ with rate $\lambda$ is given by
+$$
+\begin{aligned}
+M_{X}(s) :=\mathbb{E}[s^X] & = \exp(\lambda(s-1)).
+\end{aligned}
+$$
+
+Since $X$ and $Y$ are independent we have that
+$$
+\begin{aligned}
+M_{X+Y}(s) & = M_{X}(s)\cdot M_{Y}(s) \\
+ & = \exp(\lambda(s-1)) \cdot \exp(\mu(s-1)) \\
+ & = \exp((\lambda+\mu)(s-1)).
+\end{aligned}
+$$
+
+This is the MGF of a Poisson random variable with rate $\lambda+\mu$ which is therefore the distribution of $X+Y$ since the MGF uniquely determines the distribution.
+
+## Problem 2 - Dobrow 4.4
+
+If $X$ has a _Negative Binomial Distribution_ with parameters $r$ and $p$, then $X$ can be written as the sum of $r$ i.i.d. _Geometric_ random variables with parameter $p$.  Use this fact to find the PGF of $X$.  Then, use the PGF to find the mean and variance of the negative binomial distribution.
+
+### Solution
+
+Define a sequence $\{ \xi_{i} \}_{i=1}^r$ of i.i.d. geometric random variables with PMF
+$$
+p_{\xi_{1}}(k):=\mathbb{P}(\xi_{1}=k)=(1-p)^{k}p;~~k\in \mathbb{N}_{0},
+$$
+The PGF is given by
+$$
+\begin{aligned}
+G_{\xi_{1}}(s) & = \mathbb{E}[s^{\xi_{1}}] = \frac{p}{1-s+ps}.
+\end{aligned}
+$$
+
+From the independence of $\xi_{i}$ we can therefore compute $X=\sum_{i=1}^{r}\xi_{i}=r\xi_{1}\sim\text{NB}(r,p)$ and the associated PGF
+$$
+\begin{aligned}
+G_{X}(s) & = G_{\sum_{i=1}^{r}\xi_{1}}(s) \\
+ & = (P_{\xi_{1}}(s))^r \\
+ & = \left( \frac{p}{1-s+ps} \right)^r.
+\end{aligned}
+$$
+
+The expectation is given by
+$$
+\mathbb{E}[X] = G_{X}^{(1)}(0),
+$$
+hence we first apply the Chain Rule to compute
+$$
+\begin{aligned}
+G_{X}^{(1)}(s) & = \frac{d}{ds}\left( \frac{p}{1-(1-p)s} \right)^r \\
+& = p^r \frac{d}{ds}\left( \frac{1}{1-(1-p)s} \right)^r \\
+& = p^rr\left( \frac{1}{1-(1-p)s} \right)^{r-1}\cdot \frac{d}{ds}(1-(1-p)s)^{-1} \\
+& = p^rr\left( \frac{1}{1-(1-p)s} \right)^{r-1}\cdot -(1-(1-p)s)^{-2}\cdot \frac{d}{ds}(1-(1-p)s) \\
+& = p^rr\left( \frac{1}{1-(1-p)s} \right)^{r-1}\cdot -(1-(1-p)s)^{-2}\cdot -(1-p) \\
+& = \frac{p^rr(1-p)}{(1-(1-p)s)^{r+1}}.
+\end{aligned}
+$$
+
+Evaluating at $s=1$ we have that $1-(1-p)=p$ hence
+$$
+\begin{aligned}
+\mathbb{E}[X] & = \frac{r(1-p)}{p}.
+\end{aligned}
+$$
+
+Similarly, the variance is given by
+$$
+\text{Var}(X)=G_{X}^{(2)}(1)+G_{X}^{(1)}(1)-[G_{X}^{(1)}(1)]^2,
+$$
+
+therefore we again apply the Chain Rule to compute
+$$
+\begin{aligned}
+G_{X}^{(2)}(s) & = \frac{d}{ds} \frac{p^rr(1-p)}{(1-(1-p)s)^{r+1}} \\
+& = p^rr(1-p)\cdot \frac{d}{ds}(1-(1-p)s)^{-r-1} \\
+& = p^rr(1-p)\cdot -(r+1)(1-(1-p)s)^{-r-2}\cdot \frac{d}{ds}(1-(1-p)s) \\
+& = p^rr(1-p)\cdot -(r+1)(1-(1-p)s)^{-r-2}\cdot -(1-p)\\
+& = \frac{p^rr(1-p)^2(r+1)}{(1-(1-p)s)^{r+2}}.
+\end{aligned}
+$$
+
+Evaluating at $s=1$ we obtain
+$$
+\begin{aligned}
+G_{X}^{(2)}(1) & = \frac{p^rr(1-p)^2(r+1)}{p^{r+2}} \\
+& = \frac{r(1-p)^2(r+1)}{p^2}.
+\end{aligned}
+$$
+
+Substituting back into our expression we have
+$$
+\begin{aligned}
+\text{Var}(X) & = \frac{r(r+1)(1-p)^2}{p^2} +\frac{r(1-p)}{p} - \left[ \frac{r(1-p)}{p} \right]^2 \\
+& = \frac{{r(r+1)(1-p)^2+rp(1-p)-r^2(1-p)^2}}{p^2} \\
+& = \frac{r(1-p)\{ (r+1)(1-p)+p-r(1-p) \}}{p^2} \\
+& = \frac{r(1-p)\{ r-rp-p+1+p-r+rp \}}{p^2} \\
+& = \frac{r(1-p)}{p^2}.
+\end{aligned}
+$$
+
+## Problem 3 - Dobrow 4.12
+
+A branching process has offspring distribution $\alpha=\left( \frac{1}{4}, \frac{1}{4}, \frac{1}{2} \right)$.  Find the following:
+
+1. $\mu$;
+2. $G(s)$;
+3. The extinction probability;
+4. $G_{2}(s)$; and
+5. $\mathbb{P}(Z_{2}=0)$.
+
+### Solution
+
+Consider a branching process $\{ Z_{n} \}$ defined 
+$$
+Z_{n}:=\sum_{i=1}^{Z_{n-1}}Z_{n,i},
+$$
+
+where $Z_{n,i}$ are i.i.d. with offspring distribution $p_{k}=\mathbb{P}(Z_{n,i}=k)$ for $k \in \mathbb{N}$ and $Z_{0}=1$.  Specifically we have that
+$$
+p_{k}=\begin{cases}
+\frac{1}{4} & k \in \{ 0,1 \} \\ 
+\frac{1}{2} & k \in \{ 2 \} \\
+0 & \text{o.w.}
+\end{cases}
+$$
+
+**(1)** The mean of the offspring distribution is
+$$
+\begin{aligned}
+\mu & =\mathbb{E}[Z_{n,i}] \\
+& =\sum_{k}^{}k \cdot p_{k} \\
+& = \frac{1}{4}+\frac{2}{2} \\
+& = \frac{5}{4}.
+\end{aligned}
+$$
+
+**(2)** To find the generator of one offspring we compute
+$$
+\begin{aligned}
+G(s) & = \mathbb{E}[s^{Z_{n,i}}] \\
+& = \sum_{k}^{}p_{k}s^k \\
+& = \frac{1}{4} + \frac{s}{4} + \frac{s^2}{2} \\
+& = \frac{{2s^2+s+1}}{4}.
+\end{aligned}
+$$
+**(3)** To find the extinction probability $\eta$ we solve
+$$
+\begin{aligned}
+\eta = G(\eta) & =\frac{{2\eta^2+\eta+1}}{4} \\
+\implies 2\eta^2-3\eta+1 & = 0 \\
+\implies(2\eta-1)(\eta-1) & = 0,
+\end{aligned}
+$$
+hence $\eta=\frac{1}{2}$ or $\eta=1$.  Since $\mu>1$ we have that $\eta<1$ thus $\eta=\frac{1}{2}$.
+
+**(4)** We can compute
+$$
+\begin{aligned}
+G_{2}(s) & = G(G(s)) \\
+& = \frac{1}{4}[2G^2(s) + G(s)+1].
+\end{aligned}
+$$
+
+To avoid messy computations we first write
+$$
+\begin{aligned}
+G^2(s) & = \left( \frac{{2s^2+s+1}}{4} \right)^2 \\
+& = \frac{{4s^4+2s^3+2s^2+2s^3+s^2+s+2s^2+s+1}}{16} \\
+& = \frac{{4s^4+4s^3+5s^2+2s+1}}{16}.
+\end{aligned}
+$$
+
+Substituting back into our initial expression we find
+$$
+\begin{aligned}
+G_{2}(s) & = \left\{  \frac{{\frac{{4s^4+4s^3+5s^2+2s+1}}{8} + \frac{{2s^2+s+1}}{4}+1}}{4}  \right\} \\
+& = \frac{{4s^4+4s^3+5s^2+2s+1+4s^2+2s+s+8}}{32} \\
+& = \frac{{4s^4+4s^3+9s^2+4s+11}}{32}.
+\end{aligned}
+$$
+
+**(5)** To compute $\mathbb{P}(Z_{2}=0)$ we have that 
+$$
+\begin{aligned}
+\mathbb{P}(Z_{2}=0) & = \frac{G_{2}^{(0)}(0)}{0!} \\
+& = \frac{11}{32}.
+\end{aligned}
+$$
+
+## Problem 4 - Dobrow 4.18
+
+Consider a branching process with offspring distribution 
+$$
+\alpha=(p^2,2p(1-p),(1-p)^2);~~0<p<1.
+$$
+
+The offspring distribution is binomial with parameters $2$ and $1-p$.  Find the extinction probability $\eta$.
+
+### Solution
+
+Consider the new branching with offspring distribution
+$$
+p_{k}=\begin{cases}
+p^2 & k=0 \\ 
+2p(1-p) & k=1  \\
+(1-p)^2 & k=2 \\
+0 & \text{o.w.}
+\end{cases}
+$$
+
+First we compute
+$$
+\begin{aligned}
+\mu & = 2p(1-p)+2(1-p)^2 \\
+& = 2p-2p^2+2-4p+2p^2 \\
+& = 2-2p.
+\end{aligned}
+$$
+
+Thus $\mu=2-2p>1 \implies p< \frac{1}{2}$ is the supercritical case, otherwise $\eta=1$.  When $p< \frac{1}{2}$ to find the extinction probability we first find the offspring generator as
+$$
+\begin{aligned}
+G(s) & = \mathbb{E}[s^{Z_{n,i}}] \\
+& = \sum_{k}^{}s^k\cdot p_{k} \\
+& = p^2+2ps(1-p)+s^2(1-p)^2 \\
+& = p^2+2ps-2p^2s+s^2-2ps^2+s^2p^2.
+\end{aligned}
+$$
+
+We can then compute the extinction probability by solving
+$$
+\begin{aligned}
+\eta & = G(\eta) \\
+\eta & = p^2+2p\eta(1-p)+\eta^2(1-p)^2 \\
+0 & = \eta^2 (1-p)^2 + [2p(1-p)-1]\eta + p^2.
+\end{aligned}
+$$
+
+From the quadratic formula we have that
+$$
+\begin{aligned}
+\eta & = \frac{{1-2p(1-p)\pm \sqrt{ (2p(1-p)-1)^2-4(1-p)^2p^2 }}}{2(1-p)^2} \\
+& = \frac{{1-2p(1-p)\pm (2p-1)}}{2(1-p)^2}.
+\end{aligned}
+$$
+
+_Case 1:_ 
+$$
+\begin{aligned}
+\eta & = \frac{{1-2p+2p^2+2p-1}}{2(1-p)^2} \\
+& = \frac{p^2}{(1-p)^2} \\
+& = \left( \frac{p}{1-p} \right)^2.
+\end{aligned}
+$$
+
+_Case 2:_
+$$
+\begin{aligned}
+\eta & = \frac{{1-2p+2p^2-2p+1}}{2(1-p)^2} \\
+& = \frac{(p-1)^2}{(1-p)^2} \\
+& = 1.
+\end{aligned}
+$$
+
+We therefore summarize by giving the extinction probability as
+$$
+\eta = \begin{cases}
+\left( \frac{p}{1-p} \right)^2 & 0 < p \leq \frac{1}{2}  \\
+\frac{1}{2} & \frac{1}{2}\leq p < 1.
+\end{cases}
+$$
+
+## Problem 5 - Dobrow 4.30
+
+`R:` Simulate the branching process in Problem 3 (Dobrow 4.12).  Use your simulation to estimate the extinction probability $e$.
+
+### Solution
+
+We simulate the process in `R` as follows:
+
+```{r}
+# branching process simulation
+bp_sim <- function(n,k=c(0,1,2),p=c(0.25,0.25,0.5)){
+    z_i = 1
+    for(i in 1:n){
+        if(z_i == 0){
+            return(0)
+            break
+        } else {
+            xi = sample(k,z_i,T,p)
+            z_i = sum(xi)
+        }
+    }
+    if(z_i==0){
+        return(0)
+    } else {
+        return(1)
+    }
+}
+```
+
+We can then use Monte-Carlo approximation to estimate the extinction probability:
+```{r}
+set.seed(49)
+test = replicate(n=1000,bp_sim(n=50))
+mean(test)
+```
